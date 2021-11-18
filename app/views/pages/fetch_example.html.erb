@@ -1,0 +1,36 @@
+<div>
+  <h1>Aynchronous JAvascript XHR (with Fetch)</h1>
+  <button id="button">Get Some Text from an API with FETCH</button>
+  <br><br>
+  <div id="text"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    // THIS IS A JAVASCRIPT EXAMPLE OF WHAT ASYNC REQUEST IS
+    // BY USING THE IN-BUILT 'FETCH' JAVASCRIPT FUNCTIONALITY
+    document.getElementById('button').addEventListener('click', loadText);
+
+    function loadText() {
+        // const requestMethod = 'GET'; // by default fetch uses get request
+        const requestURL = 'https://baconipsum.com/api/?type=meat-and-filler';
+        // const isRequestAsynchronous = true; // not needed anymore
+
+
+        fetch(requestURL)
+            // parse string from the wire into JSON
+            .then(response => response.json())
+            .then((arrayOfResponseInJSON) => {
+                // handle the JSON response
+                const myLoremIpsumText = arrayOfResponseInJSON.join(' ');
+
+                // just to compare "synchronousness" with other console.log below
+                console.log(myLoremIpsumText);
+
+                // display response on screen
+                document.getElementById('text').innerHTML = myLoremIpsumText;
+            });
+
+        // with fetch the request is always async
+        console.log('If request is async this statement should print before the result is back');
+    }
+</script>

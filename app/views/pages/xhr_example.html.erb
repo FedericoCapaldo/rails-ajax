@@ -1,0 +1,53 @@
+<div>
+  <h1>Aynchronous JAvascript XHR</h1>
+  <button id="button">Get Some Text from an API with XHR</button>
+  <br><br>
+  <div id="text"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    // THIS IS A BARE JAVASCRIPT EXAMPLE OF WHAT ASYNC XHR IS
+    // IT IS THE MOST MANUAL EXAMPLE OF AN ASYNC REQUEST YOU CAN DO ON YOUR PAGE
+    document.getElementById('button').addEventListener('click', loadText);
+
+    function loadText() {
+        const requestMethod = 'GET';
+        const requestURL = 'https://baconipsum.com/api/?type=meat-and-filler';
+        const isRequestAsynchronous = true;
+
+        const xhr = new XMLHttpRequest();
+
+        // 1. give request details to the XHR request
+        xhr.open(requestMethod, requestURL, isRequestAsynchronous);
+
+
+        // 2. handle the response of async request
+        xhr.onload = function(){
+            // console.log('READYSTATE: ', xhr.readyState);
+
+            // HTTP 200 means Success. Hence this means "if request status is success"
+            if(this.status == 200){
+                // parse string from the wire into JSON
+                const arrayOfResponseInJSON = JSON.parse(this.responseText);
+
+                // handle the JSON response
+                const myLoremIpsumText = arrayOfResponseInJSON.join(' ');
+
+                // just to compare "synchronousness" with other console.log below
+                console.log(myLoremIpsumText);
+
+                // display response on screen
+                document.getElementById('text').innerHTML = myLoremIpsumText;
+            }
+        }
+
+        // 3. (optional but useful) handle potential errors
+        xhr.onerror = function(){
+            console.log('Request Error...');
+        }
+
+        // 4. Actually send the request
+        xhr.send();
+        console.log('If request is async this statement should print before the result is back');
+    }
+</script>

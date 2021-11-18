@@ -1,0 +1,35 @@
+<div>
+  <h1>Aynchronous JAvascript XHR (with Fetch and Async/Await)</h1>
+  <button id="button">Get Some Text from an API with FETCH</button>
+  <br><br>
+  <div id="text"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    // THIS IS A JAVASCRIPT EXAMPLE OF WHAT ASYNC REQUEST IS
+    // BY USING THE IN-BUILT 'FETCH' JAVASCRIPT FUNCTIONALITY
+    // AND BY USING MODERN ASYNC/AWAIT SYNTAX
+    const loadText = async () => {
+        const requestURL = 'https://baconipsum.com/api/?type=meat-and-filler';
+
+        const fetchResponse = await fetch(requestURL);
+
+        // parse string from the wire into JSON
+        const arrayOfResponseInJSON = await fetchResponse.json();
+
+        // handle the JSON response
+        const myLoremIpsumText = arrayOfResponseInJSON.join(' ');
+
+        // just to compare "synchronousness" with other console.log below
+        console.log(myLoremIpsumText);
+
+        // display response on screen
+        document.getElementById('text').innerHTML = myLoremIpsumText;
+
+
+        console.log('request is still async, but this statement will seem synchronous');
+    }
+
+    // need to add event listener after initialization of loadText
+    document.getElementById('button').addEventListener('click', loadText);
+</script>
